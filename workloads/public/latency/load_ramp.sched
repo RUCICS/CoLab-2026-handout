@@ -1,0 +1,68 @@
+track latency
+score latency_flow_p99
+score_groups low0 low1 peak0 peak1 peak2 peak3 drain0 drain1
+role leaderboard
+scenario_weight = 1.0
+workers 4
+cpu_rate 8
+switch_cost 1
+migration_cost 2
+
+group batch * 6 weight=4:
+  compute 26000
+
+phase low at 0ms:
+  group low0 * 8 weight=1 arrival stagger 700us:
+    compute 10
+    sleep 100us
+    compute 10
+    sleep 100us
+    compute 12
+  group low1 * 8 weight=1 arrival stagger 700us:
+    compute 10
+    sleep 100us
+    compute 10
+    sleep 100us
+    compute 12
+
+phase peak at 8ms:
+  group peak0 * 13 weight=1 arrival stagger 110us:
+    compute 10
+    sleep 100us
+    compute 10
+    sleep 100us
+    compute 12
+  group peak1 * 13 weight=1 arrival stagger 110us:
+    compute 10
+    sleep 100us
+    compute 10
+    sleep 100us
+    compute 12
+
+phase peak_offset0 at 8030us:
+  group peak2 * 13 weight=1 arrival stagger 110us:
+    compute 10
+    sleep 100us
+    compute 10
+    sleep 100us
+    compute 12
+  group peak3 * 13 weight=1 arrival stagger 110us:
+    compute 10
+    sleep 100us
+    compute 10
+    sleep 100us
+    compute 12
+
+phase drain at 18ms:
+  group drain0 * 8 weight=1 arrival stagger 700us:
+    compute 10
+    sleep 100us
+    compute 10
+    sleep 100us
+    compute 12
+  group drain1 * 8 weight=1 arrival stagger 700us:
+    compute 10
+    sleep 100us
+    compute 10
+    sleep 100us
+    compute 12

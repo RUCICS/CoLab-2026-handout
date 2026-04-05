@@ -1,0 +1,36 @@
+track latency
+score latency_flow_p99
+score_groups req0 req1
+role leaderboard
+scenario_weight = 1.0
+workers 4
+cpu_rate 8
+switch_cost 1
+migration_cost 2
+
+group batch * 6 weight=4:
+  compute 30000
+
+phase burst0 at 0ms:
+  group req0 * 20 weight=1 arrival burst 5 every 120us:
+    compute 8
+    sleep 60us
+    compute 10
+    sleep 70us
+    compute 12
+    sleep 80us
+    compute 14
+    sleep 90us
+    compute 16
+
+phase burst1 at 5ms:
+  group req1 * 20 weight=1 arrival burst 5 every 120us:
+    compute 8
+    sleep 60us
+    compute 10
+    sleep 70us
+    compute 12
+    sleep 80us
+    compute 14
+    sleep 90us
+    compute 16

@@ -1,0 +1,97 @@
+track throughput
+score throughput_makespan
+role leaderboard
+scenario_weight = 0.75
+workers 8
+cpu_rate 16
+switch_cost 8
+node socket0 0-3
+node socket1 4-7
+migration_cost local=12 remote=60
+
+group seeds * 2:
+  compute 120
+
+phase hot at 0ms:
+  group hot0 * 4 after fanout(seeds):
+    repeat 3:
+      compute 120 mem=high
+      sleep 25us
+      compute 110 mem=high
+  group hot1 * 4 after fanout(seeds):
+    repeat 3:
+      compute 120 mem=high
+      sleep 25us
+      compute 110 mem=high
+  group hot2 * 4 after fanout(seeds):
+    repeat 3:
+      compute 120 mem=high
+      sleep 25us
+      compute 110 mem=high
+  group hot3 * 4 after fanout(seeds):
+    repeat 3:
+      compute 120 mem=high
+      sleep 25us
+      compute 110 mem=high
+  group hot4 * 4 after fanout(seeds):
+    repeat 3:
+      compute 120 mem=high
+      sleep 25us
+      compute 110 mem=high
+  group hot5 * 4 after fanout(seeds):
+    repeat 3:
+      compute 120 mem=high
+      sleep 25us
+      compute 110 mem=high
+  group hot6 * 4 after fanout(seeds):
+    repeat 3:
+      compute 120 mem=high
+      sleep 25us
+      compute 110 mem=high
+  group hot7 * 4 after fanout(seeds):
+    repeat 3:
+      compute 120 mem=high
+      sleep 25us
+      compute 110 mem=high
+
+phase hot_offset0 at 600us:
+  group hot8 * 4 after fanout(seeds):
+    repeat 3:
+      compute 120 mem=high
+      sleep 25us
+      compute 110 mem=high
+  group hot9 * 4 after fanout(seeds):
+    repeat 3:
+      compute 120 mem=high
+      sleep 25us
+      compute 110 mem=high
+  group hot10 * 4 after fanout(seeds):
+    repeat 3:
+      compute 120 mem=high
+      sleep 25us
+      compute 110 mem=high
+  group hot11 * 4 after fanout(seeds):
+    repeat 3:
+      compute 120 mem=high
+      sleep 25us
+      compute 110 mem=high
+  group hot12 * 4 after fanout(seeds):
+    repeat 3:
+      compute 120 mem=high
+      sleep 25us
+      compute 110 mem=high
+  group hot13 * 4 after fanout(seeds):
+    repeat 3:
+      compute 120 mem=high
+      sleep 25us
+      compute 110 mem=high
+  group hot14 * 4 after fanout(seeds):
+    repeat 3:
+      compute 120 mem=high
+      sleep 25us
+      compute 110 mem=high
+  group hot15 * 4 after fanout(seeds):
+    repeat 3:
+      compute 120 mem=high
+      sleep 25us
+      compute 110 mem=high

@@ -1,0 +1,17 @@
+track fairness
+score fairness_share_skew
+role leaderboard
+scenario_weight = 0.75
+workers 4
+cpu_rate 16
+switch_cost 4
+migration_cost 8
+
+group elephants * 4 weight=1:
+  repeat 6:
+    compute 900
+
+group mice * 24 weight=3 arrival burst 4 every 1200us:
+  repeat 4:
+    compute 80
+    sleep 120us

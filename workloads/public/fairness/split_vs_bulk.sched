@@ -1,0 +1,16 @@
+track fairness
+score fairness_share_skew
+role leaderboard
+scenario_weight = 1.0
+workers 4
+cpu_rate 16
+switch_cost 4
+migration_cost 8
+
+group premium * 6 weight=4 arrival stagger 1500us:
+  repeat 6:
+    compute 160
+
+group bulk * 24 weight=1:
+  repeat 2:
+    compute 110

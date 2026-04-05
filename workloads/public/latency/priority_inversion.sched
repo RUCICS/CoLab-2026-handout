@@ -1,0 +1,68 @@
+track latency
+score latency_flow_p99
+score_groups req0 req1 req2 req3 req4 req5 req6 req7
+role leaderboard
+scenario_weight = 1.0
+workers 4
+cpu_rate 8
+switch_cost 1
+migration_cost 2
+
+group batch * 10 weight=6:
+  compute 36000
+
+phase burst0 at 2ms:
+  group req0 * 10 weight=1 arrival stagger 90us:
+    compute 4
+    sleep 40us
+    compute 4
+    sleep 40us
+    compute 6
+  group req1 * 10 weight=1 arrival stagger 90us:
+    compute 4
+    sleep 40us
+    compute 4
+    sleep 40us
+    compute 6
+
+phase burst1 at 2025us:
+  group req2 * 10 weight=1 arrival stagger 90us:
+    compute 4
+    sleep 40us
+    compute 4
+    sleep 40us
+    compute 6
+  group req3 * 10 weight=1 arrival stagger 90us:
+    compute 4
+    sleep 40us
+    compute 4
+    sleep 40us
+    compute 6
+
+phase burst2 at 2050us:
+  group req4 * 10 weight=1 arrival stagger 90us:
+    compute 4
+    sleep 40us
+    compute 4
+    sleep 40us
+    compute 6
+  group req5 * 10 weight=1 arrival stagger 90us:
+    compute 4
+    sleep 40us
+    compute 4
+    sleep 40us
+    compute 6
+
+phase burst3 at 2075us:
+  group req6 * 10 weight=1 arrival stagger 90us:
+    compute 4
+    sleep 40us
+    compute 4
+    sleep 40us
+    compute 6
+  group req7 * 10 weight=1 arrival stagger 90us:
+    compute 4
+    sleep 40us
+    compute 4
+    sleep 40us
+    compute 6

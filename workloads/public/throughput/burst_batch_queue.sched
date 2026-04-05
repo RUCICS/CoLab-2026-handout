@@ -1,0 +1,23 @@
+track throughput
+score throughput_makespan
+role leaderboard
+scenario_weight = 1.0
+workers 8
+cpu_rate 16
+switch_cost 8
+migration_cost 15
+
+group seeds * 2:
+  compute 120
+
+phase burst0 at 2ms:
+  group wave0 * 48 after fanout(seeds):
+    compute 180 jitter=80
+
+phase burst1 at 3500us:
+  group wave1 * 96 after fanout(wave0):
+    compute 220 jitter=120
+
+phase tail at 6500us:
+  group tail * 24 after join(wave1):
+    compute 720 jitter=140

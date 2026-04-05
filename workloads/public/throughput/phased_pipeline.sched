@@ -1,0 +1,58 @@
+track throughput
+score throughput_makespan
+role leaderboard
+scenario_weight = 1.0
+workers 4
+cpu_rate 16
+switch_cost 12
+migration_cost 15
+
+device disk0 fifo rate=4 parallel=2
+
+phase map at 0ms:
+  group mappers * 32:
+    repeat 4:
+      compute 180 jitter=120
+      call disk0 30
+  group noise0 * 8:
+    compute 400
+
+phase map_noise0 at 1ms:
+  group noise0a * 8:
+    compute 220
+
+phase map_noise1 at 3ms:
+  group noise0b * 8:
+    compute 220
+
+phase shuffle at 6ms:
+  group shufflers * 32 after join(mappers):
+    repeat 6:
+      call disk0 35
+      compute 30 jitter=15
+  group sidecars * 32 after each(mappers):
+    compute 420 jitter=60
+  group noise1 * 8:
+    compute 400
+
+phase shuffle_noise0 at 7ms:
+  group noise1a * 8:
+    compute 220
+
+phase shuffle_noise1 at 9ms:
+  group noise1b * 8:
+    compute 220
+
+phase reduce at 18ms:
+  group reducers * 32 after join(shufflers):
+    compute 360 jitter=90
+  group noise2 * 8:
+    compute 400
+
+phase reduce_noise0 at 19ms:
+  group noise2a * 8:
+    compute 220
+
+phase reduce_noise1 at 21ms:
+  group noise2b * 8:
+    compute 220

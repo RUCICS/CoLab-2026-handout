@@ -1,0 +1,29 @@
+track latency
+score latency_wakeup_p99
+role gate
+scenario_weight = 1.0
+workers 4
+cpu_rate 16
+switch_cost 1
+migration_cost 2
+
+event gate0
+event gate1
+
+group trigger0 * 1:
+  sleep 8ms
+  compute 40
+  signal gate0
+
+group trigger1 * 1:
+  sleep 8500us
+  compute 40
+  signal gate1
+
+group waiters0 * 4:
+  wait gate0
+  compute 24
+
+group waiters1 * 4:
+  wait gate1
+  compute 24

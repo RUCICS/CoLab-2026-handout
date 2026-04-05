@@ -1,0 +1,16 @@
+track fairness
+score fairness_share_skew
+role gate
+scenario_weight = 0.25
+workers 4
+cpu_rate 16
+switch_cost 4
+migration_cost 8
+
+group tenant_a * 8 weight=1:
+  repeat 10:
+    compute 100
+
+group tenant_b * 8 weight=1:
+  repeat 10:
+    compute 100

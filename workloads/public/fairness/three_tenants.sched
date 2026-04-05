@@ -1,0 +1,20 @@
+track fairness
+score fairness_share_skew
+role leaderboard
+scenario_weight = 0.75
+workers 4
+cpu_rate 16
+switch_cost 4
+migration_cost 8
+
+group tenant_a * 4 weight=3:
+  repeat 10:
+    compute 320
+
+group tenant_c * 8 weight=2:
+  repeat 8:
+    compute 240
+
+group tenant_b * 16 weight=1 arrival burst 4 every 180us:
+  repeat 4:
+    compute 120

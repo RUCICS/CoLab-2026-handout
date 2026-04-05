@@ -1,0 +1,32 @@
+track latency
+score latency_wakeup_p99
+role gate
+scenario_weight = 1.0
+workers 4
+cpu_rate 4
+switch_cost 1
+migration_cost 1
+
+phase aligned0 at 0ms:
+  group aligned0_clients * 16:
+    repeat 20:
+      sleep 500us
+      compute 120
+
+phase aligned1 at 750us:
+  group aligned1_clients * 16:
+    repeat 20:
+      sleep 500us
+      compute 120
+
+phase aligned2 at 1500us:
+  group aligned2_clients * 16:
+    repeat 20:
+      sleep 500us
+      compute 120
+
+phase offset at 0ms:
+  group offset_clients * 8 arrival stagger 250us:
+    repeat 20:
+      sleep 650us
+      compute 120

@@ -1,0 +1,10 @@
+legacy/
+docs/plans/
+.worktrees/
+worktrees/
+build/
+.cache/
+.venv/
+out/
+__pycache__/
+colab

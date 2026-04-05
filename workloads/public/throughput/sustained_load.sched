@@ -1,0 +1,62 @@
+track throughput
+score throughput_sustained_rate
+role leaderboard
+scenario_weight = 0.5
+workers 4
+cpu_rate 16
+switch_cost 8
+migration_cost 15
+
+device net0 fifo rate=10 parallel=4
+
+group batch * 2:
+  repeat 100:
+    compute 180
+
+phase req_phase0 at 0us:
+  group req0 * 18 arrival stagger 180us:
+    repeat 2:
+      compute 140 jitter=30
+      call net0 12
+    compute 120 jitter=20
+  group req1 * 18 arrival stagger 180us:
+    repeat 2:
+      compute 140 jitter=30
+      call net0 12
+    compute 120 jitter=20
+
+phase req_phase1 at 45us:
+  group req2 * 18 arrival stagger 180us:
+    repeat 2:
+      compute 140 jitter=30
+      call net0 12
+    compute 120 jitter=20
+  group req3 * 18 arrival stagger 180us:
+    repeat 2:
+      compute 140 jitter=30
+      call net0 12
+    compute 120 jitter=20
+
+phase req_phase2 at 90us:
+  group req4 * 18 arrival stagger 180us:
+    repeat 2:
+      compute 140 jitter=30
+      call net0 12
+    compute 120 jitter=20
+  group req5 * 18 arrival stagger 180us:
+    repeat 2:
+      compute 140 jitter=30
+      call net0 12
+    compute 120 jitter=20
+
+phase req_phase3 at 135us:
+  group req6 * 18 arrival stagger 180us:
+    repeat 2:
+      compute 140 jitter=30
+      call net0 12
+    compute 120 jitter=20
+  group req7 * 18 arrival stagger 180us:
+    repeat 2:
+      compute 140 jitter=30
+      call net0 12
+    compute 120 jitter=20
