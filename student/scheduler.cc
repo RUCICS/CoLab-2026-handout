@@ -2,6 +2,10 @@
 
 namespace student {
 
+void Scheduler::init(const schedlab::SystemView& system) {
+  (void)system;
+}
+
 int Scheduler::select_worker(const schedlab::TaskView&, schedlab::ReadyContext ctx,
                              const schedlab::SystemView& system) {
   // Keep wakeups on the worker that previously ran the task when possible.
@@ -40,6 +44,21 @@ bool Scheduler::should_preempt(const schedlab::TaskView&, const schedlab::TaskVi
 
 std::optional<schedlab::Scheduler::StealResult> Scheduler::steal(int, const schedlab::SystemView&) {
   return std::nullopt;
+}
+
+void Scheduler::on_task_preempted(const schedlab::TaskView& task, int worker_id) {
+  (void)task;
+  (void)worker_id;
+}
+
+void Scheduler::on_task_blocked(const schedlab::TaskView& task, int worker_id) {
+  (void)task;
+  (void)worker_id;
+}
+
+void Scheduler::on_task_exited(const schedlab::TaskView& task, int worker_id) {
+  (void)task;
+  (void)worker_id;
 }
 
 } // namespace student

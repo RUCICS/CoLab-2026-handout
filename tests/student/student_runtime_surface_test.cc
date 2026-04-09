@@ -1,7 +1,7 @@
 #include <type_traits>
 
-#include "student/context.h"
-#include "student/runtime.h"
+#include "runtime/context.h"
+#include "runtime/runtime.h"
 
 static_assert(std::is_same_v<student::FrameworkContext, schedlab::runtime::FrameworkContext>);
 static_assert(std::is_same_v<student::TaskContext, schedlab::runtime::TaskContext>);

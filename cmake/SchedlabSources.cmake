@@ -1,10 +1,10 @@
 set(SCHEDLAB_CONTEXT_IMPL_SOURCES
-  student/context.cc
+  runtime/context.cc
   runtime/task_entry.cc
 )
 
 set(SCHEDLAB_SINGLE_WORKER_IMPL_SOURCES
-  student/runtime.cc
+  runtime/runtime.cc
   runtime/worker.cc
 )
 
