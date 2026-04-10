@@ -231,6 +231,7 @@ def debug(
 
 @app.command()
 def calibrate(
+    suite: str = typer.Option("public", help="Suite to run calibration against."),
     repetitions: int = typer.Option(1, min=1, help="Number of repetitions per track."),
 ) -> None:
     tracks = ["throughput", "latency", "fairness"]
@@ -238,7 +239,7 @@ def calibrate(
     for track in tracks:
         discovered = collect_records_with_status(
             f"Discovering {track} workloads",
-            ["--list-workloads", "--suite", "public", "--track", track, "--role", "leaderboard"],
+            ["--list-workloads", "--suite", suite, "--track", track, "--role", "leaderboard"],
         )
         scenarios = [
             str(record.get("scenario", ""))
@@ -267,7 +268,7 @@ def calibrate(
             records = collect_records_with_status(
                 f"Calibrating {track} with {scheduler}",
                 benchlib.release_args_for_scheduler(
-                    suite="public",
+                    suite=suite,
                     track=track,
                     scenario=None,
                     role="leaderboard",
