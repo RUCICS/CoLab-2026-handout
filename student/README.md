@@ -1,40 +1,41 @@
-# Student Implementation Module
+# Student Implementation Area
 
-This directory is the student-owned implementation area for `Schedlab`.
+`student/` 是你实现调度策略的工作区。
 
-It now contains both:
-- Phase 1 mechanism code for the coroutine/runtime path
-- Phase 2 scheduler policy code for the simulator-facing scheduler interface
+handout 的起始代码只包含两个文件：
+- `student/scheduler.h`
+- `student/scheduler.cc`
 
-## What You Own
+你可以直接在这两个文件里实现策略，也可以在 `student/` 下添加自己的辅助头文件和源文件来组织代码。
 
-You may change anything under `student/`, including adding helper headers or
-source files for:
-- coroutine context management
-- single-worker runtime loop and wakeup logic
-- runqueue data structures
-- per-task scheduling metadata
-- placement and steal policies
-- locking or atomic schemes inside your scheduler
+## 你负责的内容
 
-## What You Do Not Own
+- worker 放置策略
+- 本地队列选取策略
+- tick 抢占策略
+- 唤醒抢占策略
+- work stealing 策略
+- 调度器维护的私有元数据
 
-Do not modify:
-- `include/schedlab/`
-- `runtime/`
-- `devices/`
-- `benchmark/`
-- `workloads/`
-- `tools/`
+## framework 负责的内容
 
-The framework owns task lifetime, stacks, blocking and wakeup semantics,
-preemption delivery, worker threads, and correctness checks.
+- task 生命周期
+- ready queue 的实际维护
+- 阻塞与唤醒
+- 设备完成事件
+- correctness gate
+- benchmark 计分
 
-## Suggested Development Order
+## 建议阅读顺序
 
-1. Make `student/context.*` correct.
-2. Make `student/runtime.*` pass the single-worker tests.
-3. Implement a simple single-worker policy in `student/scheduler.*`.
-4. Extend `student/scheduler.*` for multi-worker correctness and optimization.
+1. 先读仓库根目录的 `README.md`
+2. 再读 `../docs/scheduler-guide.md`
+3. 然后选一个公开 workload，对照 `../docs/workload-guide.md` 理解它在测试什么
+4. 从 `benchmark/baseline_rr.cc` 开始读一个完整参考实现
 
-See [student-guide.md](/home/starrydream/ICS2/CoLab-2026/docs/student-guide.md) for the full contract and [ta-debugging.md](/home/starrydream/ICS2/CoLab-2026/docs/ta-debugging.md) for the invariant-driven debugging workflow used by the course staff.
+## 建议开发顺序
+
+1. 先写一个正确、简单、稳定的策略
+2. 用公开 workload 跑通 correctness gate
+3. 选定一条赛道再做针对性优化
+4. 用公开 workload 做对比实验，再提交到排行榜
