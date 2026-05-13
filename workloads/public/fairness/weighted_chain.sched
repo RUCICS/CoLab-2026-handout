@@ -1,0 +1,39 @@
+track fairness
+score fairness_share_skew
+role leaderboard
+scenario_weight = 1.0
+workers 4
+cpu_rate 16
+switch_cost 4
+migration_cost 8
+
+event seed_ready
+latch branch_done count=8
+
+group seed * 2:
+  compute 110
+  signal seed_ready
+
+phase expand at 0us:
+  group branch_hot * 4 weight=3 arrival stagger 220us:
+    wait seed_ready
+    repeat 4:
+      compute 95
+      sleep 30us
+      compute 80
+    arrive branch_done
+  group branch_cool * 4 weight=1 arrival burst 2 every 300us:
+    wait seed_ready
+    repeat 4:
+      compute 70
+      sleep 25us
+      compute 55
+    arrive branch_done
+
+phase tail at 2500us:
+  group regroup * 4 weight=2 arrival stagger 200us:
+    wait branch_done
+    repeat 3:
+      compute 90
+      sleep 35us
+      compute 70

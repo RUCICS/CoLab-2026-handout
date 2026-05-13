@@ -1,29 +1,39 @@
 track latency
 score latency_wakeup_p99
-role gate
+role leaderboard
 scenario_weight = 1.0
 workers 4
-cpu_rate 16
+cpu_rate 8
 switch_cost 1
-migration_cost 2
+migration_cost 1
 
 event gate0
 event gate1
+event gate2
 
-group trigger0 * 1:
-  sleep 8ms
-  compute 40
-  signal gate0
+phase arm at 0ms:
+  group waiters0 * 6 weight=4:
+    wait gate0
+    compute 50
+  group waiters1 * 6 weight=4:
+    wait gate1
+    compute 50
+  group waiters2 * 6 weight=4:
+    wait gate2
+    compute 50
 
-group trigger1 * 1:
-  sleep 8500us
-  compute 40
-  signal gate1
+phase load at 400us:
+  group hogs * 8 arrival stagger 70us:
+    compute 600
 
-group waiters0 * 4:
-  wait gate0
-  compute 24
+phase wake0 at 1500us:
+  group trigger0 * 1:
+    signal gate0
 
-group waiters1 * 4:
-  wait gate1
-  compute 24
+phase wake1 at 2500us:
+  group trigger1 * 1:
+    signal gate1
+
+phase wake2 at 3500us:
+  group trigger2 * 1:
+    signal gate2

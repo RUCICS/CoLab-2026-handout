@@ -1,0 +1,62 @@
+track latency
+score latency_flow_p99
+score_groups agg0 agg1
+role gate
+scenario_weight = 1.0
+workers 2
+cpu_rate 8
+switch_cost 2
+migration_cost 3
+
+device net0 fifo rate=5 parallel=2
+
+group seeds * 2:
+  compute 140
+
+phase warmup at 0ms:
+  group front0 * 4 weight=1 after fanout(seeds):
+    compute 10
+    sleep 70us
+    compute 10
+    call net0 12
+    sleep 30us
+    compute 8
+  group front1 * 4 weight=1 after fanout(seeds):
+    compute 10
+    sleep 70us
+    compute 10
+    call net0 12
+    sleep 30us
+    compute 8
+
+phase ramp at 3500us:
+  group front2 * 8 weight=1 after fanout(front0):
+    compute 10
+    sleep 40us
+    compute 10
+    call net0 10
+    sleep 50us
+    call net0 6
+    compute 12
+  group front3 * 12 weight=1 after fanout(front1):
+    compute 10
+    sleep 40us
+    compute 10
+    call net0 10
+    sleep 50us
+    call net0 6
+    compute 12
+
+phase peak at 6500us:
+  group bg0 * 12 arrival stagger 80us:
+    compute 4800
+  group agg0 * 4 weight=4 after join(front2):
+    call net0 8
+    compute 14
+    sleep 70us
+    compute 14
+  group agg1 * 6 weight=4 after join(front3):
+    call net0 8
+    compute 14
+    sleep 70us
+    compute 14

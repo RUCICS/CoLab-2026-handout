@@ -16,6 +16,8 @@
 - `workloads/public/latency/`
 - `workloads/public/fairness/`
 
+排行榜使用 `role leaderboard` 的场景；`role gate` 的场景用于 release 模式下的 correctness gate。完整的 public/hidden 排行榜场景清单维护在内部文档 `docs/leaderboard-workloads.md`。
+
 ## 先看一个最小骨架
 
 ```text
@@ -151,6 +153,7 @@ arrival 形状会直接影响 latency 和 burst handling。
 
 ```bash
 python tools/bench.py list
+./build/benchmark/runner --list-workloads --suite public --role leaderboard
 python tools/bench.py debug --scenario public/throughput/cache_affinity
 python tools/bench.py debug --scenario public/latency/rpc_fanout_join
 python tools/bench.py debug --scenario public/fairness/three_tenants

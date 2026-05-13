@@ -2,7 +2,7 @@ track latency
 score latency_flow_p99
 score_groups req0 req1 req2 req3 req4 req5 req6 req7
 role leaderboard
-scenario_weight = 1.0
+scenario_weight = 0.5
 workers 4
 cpu_rate 8
 switch_cost 1

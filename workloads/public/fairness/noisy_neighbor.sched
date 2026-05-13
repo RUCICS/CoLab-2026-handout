@@ -1,7 +1,7 @@
 track fairness
 score fairness_share_skew
 role leaderboard
-scenario_weight = 1.0
+scenario_weight = 0.55
 workers 4
 cpu_rate 16
 switch_cost 4
@@ -12,9 +12,9 @@ group steady * 12 weight=4 arrival stagger 2ms:
     compute 120
 
 phase burst0 at 12ms:
-  group noisy0 * 32 weight=1:
+  group noisy0 * 24 weight=1:
     compute 220
 
 phase burst1 at 20ms:
-  group noisy1 * 32 weight=1:
+  group noisy1 * 24 weight=1:
     compute 220
